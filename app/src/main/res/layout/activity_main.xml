@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <TextView android:id="@+id/mainLogo"
         android:layout_width="154dp"
         android:layout_height="69dp"
         android:text="Water Me!"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.243" />
 
-    <Button
+    <Button android:id="@+id/waterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Water Drop Here"
