@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import java.lang.Exception
 import java.sql.DataTruncation
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,10 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
     private lateinit var calendar: Calendar
-    private lateinit var today: String
-    private lateinit var tomorrow: String
-    var isDayStart = true
-    var initialized = false
+    private lateinit var date: String
 
     private lateinit var waterDropButton: Button
 
@@ -35,41 +33,32 @@ class MainActivity : AppCompatActivity() {
 
         waterDropButton = findViewById(R.id.waterButton)
 
+        calendar = Calendar.getInstance()
+        date = dateFormat.format(calendar.time)
 
-
-        if (isDayStart) {
-            calendar = Calendar.getInstance()
-            today = dateFormat.format(calendar.time)
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
-            tomorrow = dateFormat.format(calendar.time)
-            isDayStart = false
-        }
-
-
-        if (!initialized) {
-            val info = "${today}\n0 0"
+        val initialized = readFromFile(filename)
+        if (initialized == "") {
+            val info = "${date}\n0 0"
             writeToFile(info)
-            initialized = true
         }
 
-        if (today.split("/")[0].toInt() > tomorrow.split("/")[0].toInt() ||
-                today.split("/")[1].toInt() > tomorrow.split("/")[1].toInt()) {
+        val info = readFromFile(filename)
+        val infoToList = info.split("\n")
+        if (infoToList[0].split("/")[0] > date.split("/")[0] ||
+                infoToList[0].split("/")[1] > date.split("/")[1]) {
 
-            isDayStart = true
-            val info = readFromFile(filename)
-            if (info != "") {
-                val separated = info.split("\n")
-                if (separated[1].split(" ")[0].toInt() >= sipInDay) {
-                    val updatedDayCounter = separated[0] + "\n" + "0 " + (separated[1].split(" ")[1].toInt() + 1)
-                    writeToFile(updatedDayCounter)
-                }
+            val updatedDate = date
+            var updatedDayCounter = infoToList[1].split("  ")[1]
+            if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
+                updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
             }
+
+            writeToFile(updatedDate + "\n" + updatedDayCounter)
         }
 
 
         waterDropButton.setOnClickListener {
             var info = readFromFile(filename)
-            Log.i(TAG, info)
             val separated = info.split("\n")
             val updatedDayCounter = separated[0] + "\n" + (separated[1].split(" ")[0].toInt() + 1) + " "+ (separated[1].split(" ")[1].toInt())
             writeToFile(updatedDayCounter)
@@ -78,14 +67,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /*
+        The file in internal storage will be kept once the app is running.
+        In order to clear everything, you'll have to access the emulator's file
+        explorer and delete the file specifically and start the app again.
+
+     */
     private fun readFromFile(filename: String): String {
-        openFileInput(filename).use { stream ->
-            var text = stream.bufferedReader().use{
-                it.readText()
+        var text = ""
+        try {
+            openFileInput(filename).use { stream ->
+                text = stream.bufferedReader().use{
+                    it.readText()
+                }
+                return text
             }
+        } catch (ex: Exception) {
             return text
         }
-
     }
 
     private fun writeToFile(text: String) {
