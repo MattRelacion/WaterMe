@@ -1,6 +1,7 @@
 package com.example.waterme
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -44,17 +45,13 @@ class MainActivity : AppCompatActivity() {
 
         val info = readFromFile(filename)
         val infoToList = info.split("\n")
-        Log.i(TAG, "currDate: ${date.split("/")}")
-        Log.i(TAG, "shouldUpdateDat: ${date}")
-        if (infoToList[0].split("/")[0].toInt() < date.split("/")[0].toInt() ||
-                infoToList[0].split("/")[1].toInt() < date.split("/")[1].toInt() ||
-                infoToList[0].split("/")[2].toInt() < date.split("/")[2].toInt()) {
+        if (infoToList[0].split("/")[0] > date.split("/")[0] ||
+                infoToList[0].split("/")[1] > date.split("/")[1]) {
+
             val updatedDate = date
-            lateinit var updatedDayCounter: String
+            var updatedDayCounter = infoToList[1].split("  ")[1]
             if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
                 updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
-            } else {
-                updatedDayCounter = "0 0"
             }
 
             writeToFile(updatedDate + "\n" + updatedDayCounter)
