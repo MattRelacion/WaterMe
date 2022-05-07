@@ -44,13 +44,17 @@ class MainActivity : AppCompatActivity() {
 
         val info = readFromFile(filename)
         val infoToList = info.split("\n")
-        if (infoToList[0].split("/")[0] > date.split("/")[0] ||
-                infoToList[0].split("/")[1] > date.split("/")[1]) {
-
+        Log.i(TAG, "currDate: ${date.split("/")}")
+        Log.i(TAG, "shouldUpdateDat: ${date}")
+        if (infoToList[0].split("/")[0].toInt() < date.split("/")[0].toInt() ||
+                infoToList[0].split("/")[1].toInt() < date.split("/")[1].toInt() ||
+                infoToList[0].split("/")[2].toInt() < date.split("/")[2].toInt()) {
             val updatedDate = date
-            var updatedDayCounter = infoToList[1].split("  ")[1]
+            lateinit var updatedDayCounter: String
             if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
                 updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
+            } else {
+                updatedDayCounter = "0 0"
             }
 
             writeToFile(updatedDate + "\n" + updatedDayCounter)
