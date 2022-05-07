@@ -27,12 +27,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var date: String
 
     private lateinit var waterDropButton: Button
+    private lateinit var goToNotifyButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         waterDropButton = findViewById(R.id.waterButton)
+        goToNotifyButton = findViewById(R.id.goToNotifyButton)
 
         calendar = Calendar.getInstance()
         date = dateFormat.format(calendar.time)
@@ -64,6 +66,12 @@ class MainActivity : AppCompatActivity() {
             val updatedDayCounter = separated[0] + "\n" + (separated[1].split(" ")[0].toInt() + 1) + " "+ (separated[1].split(" ")[1].toInt())
             writeToFile(updatedDayCounter)
             Log.i(TAG, updatedDayCounter)
+        }
+
+        //go to notifications page
+        goToNotifyButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, Notifications::class.java)
+            startActivity(intent)
         }
 
     }
