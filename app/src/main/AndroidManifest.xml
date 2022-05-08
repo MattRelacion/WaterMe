@@ -9,6 +9,7 @@
         android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.WaterMe">
+
         <activity
             android:name=".Notifications"
             android:exported="false" />
@@ -21,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".WaterPlantActivity">
+
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"></activity>

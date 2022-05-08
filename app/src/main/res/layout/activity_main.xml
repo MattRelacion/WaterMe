@@ -6,40 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView android:id="@+id/mainLogo"
-        android:layout_width="154dp"
-        android:layout_height="69dp"
-        android:text="Water Me!"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.243" />
-
-    <Button android:id="@+id/waterButton"
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Water Drop Here"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
+        app:srcCompat="@drawable/background" />
 
     <Button
         android:id="@+id/goToNotifyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go To Notifications"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        android:layout_width="98dp"
+        android:layout_height="73dp"
+        android:layout_gravity="center"
+        android:text="@string/go_to_notifications"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        tools:ignore="TextContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/waterButton"
+        android:layout_width="127dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="null"
+        android:contentDescription="@string/water_me_button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/button"
+        android:text="@string/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goToNotifyButton" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="171dp"
+        android:layout_height="528dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="280dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:srcCompat="@drawable/plant1" />
+
+    <ImageButton
+        android:id="@+id/dayOne"
+        android:layout_width="59dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="544dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/circle"
+        android:text="@string/button"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goToNotifyButton" />
+
+    <ImageButton
+        android:id="@+id/dayTwo"
+        android:layout_width="59dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="544dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/circle"
+        android:text="@string/button"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.303"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goToNotifyButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
