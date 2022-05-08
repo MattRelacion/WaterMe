@@ -1,5 +1,6 @@
 package com.example.waterme
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     //hardcoded. can be based on setting
     private val sipInDay = 3
-
+    
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
     private lateinit var calendar: Calendar
@@ -28,6 +29,37 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var waterDropButton: Button
     private lateinit var goToNotifyButton: Button
+
+    private val receiver = object: DateChangedBroadcastReceiver() {
+        override fun dateChanged(onFileDate: String, curDate: String) {
+            val info = readFromFile(filename)
+            val infoToList = info.split("\n")
+            if (onFileDate.split("/")[0] < curDate.split("/")[0] ||
+                onFileDate.split("/")[1] < curDate.split("/")[1] ||
+                onFileDate.split("/")[2] < curDate.split("/")[2]) {
+                val updatedDate = curDate
+                lateinit var updatedDayCounter: String
+
+                if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
+                    updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
+                } else  {
+                    updatedDayCounter = "0 0"
+                }
+
+                Log.i(TAG, "UPDATE TO FILE: $updatedDate , $updatedDayCounter")
+                writeToFile(updatedDate + "\n" + updatedDayCounter)
+            }
+
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val info = readFromFile(filename)
+        val infoToList = info.split("\n")
+        val dateInList = infoToList[0]
+        receiver.registerOnStart(this, dateInList)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +76,6 @@ class MainActivity : AppCompatActivity() {
             val info = "${date}\n0 0"
             writeToFile(info)
         }
-
-        val info = readFromFile(filename)
-        val infoToList = info.split("\n")
-        if (infoToList[0].split("/")[0] > date.split("/")[0] ||
-                infoToList[0].split("/")[1] > date.split("/")[1]) {
-
-            val updatedDate = date
-            var updatedDayCounter = infoToList[1].split("  ")[1]
-            if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
-                updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
-            }
-
-            writeToFile(updatedDate + "\n" + updatedDayCounter)
-        }
-
 
         waterDropButton.setOnClickListener {
             var info = readFromFile(filename)
