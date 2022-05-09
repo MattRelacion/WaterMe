@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import java.lang.Exception
 import java.sql.DataTruncation
+import android.widget.ImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var waterDropButton: ImageButton
     private lateinit var goToNotifyButton: Button
+    private lateinit var weekProgressButton: ImageView
 
     private val receiver = object: DateChangedBroadcastReceiver() {
         override fun dateChanged(onFileDate: String, curDate: String) {
@@ -68,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         waterDropButton = findViewById(R.id.waterButton)
         goToNotifyButton = findViewById(R.id.goToNotifyButton)
+        weekProgressButton = findViewById(R.id.week_progress)
 
         calendar = Calendar.getInstance()
         date = dateFormat.format(calendar.time)
@@ -92,6 +95,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        weekProgressButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, WaterPlantActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     /*
