@@ -21,6 +21,8 @@ class WaterPlantActivity: AppCompatActivity() {
 
     private val filename = "progress.txt"
 
+    private val plantImages = arrayOf("plant1", "plant2", "plant3", "plant4")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waterplant_activity)
