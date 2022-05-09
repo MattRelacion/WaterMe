@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var goToNotifyButton: Button
     private lateinit var weekProgressButton: ImageView
     private lateinit var displayImage: ImageView
+
     private var switch = false
 
     private val receiver = object: DateChangedBroadcastReceiver() {
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         val separated = info.split("\n")
         val day = separated[1].split(" ")[1].toInt()
 
-        if(day == 1){
+        if(day == 1 || day == 0){
             displayImage.setImageResource(R.drawable.plant1)
         } else if (day == 2){
             displayImage.setImageResource(R.drawable.plant2)
@@ -92,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         } else if (day == 4) {
             displayImage.setImageResource(R.drawable.plant3)
         } else {
-            displayImage.setImageResource(R.drawable.plant1)
+            displayImage.setImageResource(R.drawable.plant4)
         }
 
         val initialized = readFromFile(filename)
@@ -109,11 +110,11 @@ class MainActivity : AppCompatActivity() {
             val updatedDayCounter = separated[0] + "\n" + (sips + 1) + " "+ (day)
             writeToFile(updatedDayCounter)
             if (sips >= sipInDay && switch == false){
-                if(day.toInt() == 0){
+                if(day == 1){
                     displayImage.setImageResource(R.drawable.plant2)
-                } else if (day.toInt() == 1){
+                } else if (day == 2){
                     displayImage.setImageResource(R.drawable.plant3)
-                } else {
+                } else if (day >= 3){
                     displayImage.setImageResource(R.drawable.plant4)
                 }
                 switch = true

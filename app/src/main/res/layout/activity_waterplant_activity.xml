@@ -7,28 +7,83 @@
 
     <ImageView
         android:id="@+id/weekProgress"
+        android:scaleType="fitXY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Weekly Report"
+        android:contentDescription="Weekly Report Background Image"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/weeklyprogress" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+    <ImageView
+        android:id="@+id/dayTwo"
+        android:layout_width="70dp"
+        android:layout_height="107dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="92dp"
+        android:contentDescription="Day 1 Leaf"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/leaf"
+        tools:ignore="ImageContrastCheck" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="63dp"
-            android:layout_height="97dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="95dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/plant2" />
+    <ImageView
+        android:id="@+id/dayOne"
+        android:layout_width="70dp"
+        android:layout_height="107dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="92dp"
+        android:contentDescription="Day 2 Leaf"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/leaf"
+        tools:ignore="ImageContrastCheck" />
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/dayFive"
+        android:layout_width="70dp"
+        android:layout_height="107dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="520dp"
+        android:layout_marginEnd="92dp"
+        android:contentDescription="Day 3 Leaf"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/leaf"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/dayFour"
+        android:layout_width="70dp"
+        android:layout_height="107dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="432dp"
+        android:layout_marginEnd="92dp"
+        android:contentDescription="Day 4 Leaf"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/leaf"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/dayThree"
+        android:layout_width="70dp"
+        android:layout_height="107dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="92dp"
+        android:contentDescription="Day 5 Leaf"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/leaf"
+        tools:ignore="ImageContrastCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
