@@ -1,74 +1,86 @@
 package com.example.waterme
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import android.os.SystemClock
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import java.text.DateFormat
+import java.util.*
 
 class Notifications : AppCompatActivity() {
 
-    private val CHANNEL_ID = "channel_id_example"
-    private val notificationId = 101
+    private lateinit var mAlarmManager: AlarmManager
+    private lateinit var mNotificationReceiverPendingIntent: PendingIntent
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    companion object {
+        private const val oneSecond = 1000L
+        private const val delay = 1000L
+
+    }
+
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
 
-        createNotificationChannel()
+        mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val notify_button = findViewById<Button>(R.id.notify_button)
-        notify_button.setOnClickListener() {
-            sendNotification()
-        }
+        // Create an Intent to broadcast to the AlarmNotificationReceiver
+        val mNotificationReceiverIntent = Intent(
+            this,
+            BroadcastReceiver::class.java
+        )
 
+        // Create an PendingIntent that holds the NotificationReceiverIntent
+        mNotificationReceiverPendingIntent = PendingIntent.getBroadcast(
+            this, 0, mNotificationReceiverIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Notification Title"
-            val descriptionText = "Notification Description"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description= descriptionText
-            }
-            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
+    fun onClickSendNotification(v: View) {
+        // Set single alarm
+        mAlarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis(),
+            mNotificationReceiverPendingIntent
+        )
+
+
+        // Show Toast message
+        Toast.makeText(
+            applicationContext, "Notification Processed",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
-    private fun sendNotification() {
-//        val intent = Intent(this, Notifications::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
-//        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-//
-//        //Change androidTwo to the appropriate icons
-//        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.androidtwo)
-//        val bitMapLargeIcon = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.androidtwo)
+    fun onClickSendRepeatNotification(v: View) {
+        // Set repeating alarm (Currently set at 1 min, change delay to longer, minimum is 1 min)
+        mAlarmManager.setRepeating(
+            AlarmManager.ELAPSED_REALTIME,
+            SystemClock.elapsedRealtime(),
+            delay,
+            mNotificationReceiverPendingIntent
+        )
 
+        // Show Toast message
+        Toast.makeText(
+            applicationContext, "Repeating Notification Set",
+            Toast.LENGTH_LONG
+        ).show()
+    }
 
+    fun onClickCancelRepeat(v: View) {
+        // Cancel all alarms using mNotificationReceiverPendingIntent
+        mAlarmManager.cancel(mNotificationReceiverPendingIntent)
 
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-//        set this to logo later
-            .setContentTitle("Example Title")
-            .setContentText("Example Text")
-//            .setLargeIcon(bitMapLargeIcon)
-//            .setStyle(NotificationCompat.BigPictureStyle().bigLargeIcon(bitmap))
-//            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(this)) {
-            notify(notificationId, builder.build())
-        }
+        // Show Toast message
+        Toast.makeText(
+            applicationContext,
+            "No Longer Repeating", Toast.LENGTH_LONG
+        ).show()
     }
 }
