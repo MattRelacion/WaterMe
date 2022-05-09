@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WaterMe</string>
+    <string name="water_me">Water Me!</string>
+    <string name="button">Button</string>
+    <string name="water_me_button">water me button</string>
+    <string name="go_to_notifications">Go To Notifications</string>
 </resources>
