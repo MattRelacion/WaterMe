@@ -21,7 +21,6 @@
         android:textColor="#000000"
         tools:ignore="TextContrastCheck" />
 
-
     <ImageButton
         android:id="@+id/waterButton"
         android:layout_width="match_parent"
