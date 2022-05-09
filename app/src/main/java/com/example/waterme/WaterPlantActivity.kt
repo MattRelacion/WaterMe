@@ -43,10 +43,18 @@ class WaterPlantActivity: AppCompatActivity() {
         dayFive = findViewById(R.id.dayFive)
 
         var info = readFromFile(filename)
-        val separated = info.split("\n")
-        val day = separated[1].split(" ")[1].toInt()
-
-        if (day == 1){
+        var day = 0
+        if (info.length != 0) {
+            val separated = info.split("\n")
+            day = separated[1].split(" ")[1].toInt()
+        }
+        if (day == 0){
+            dayOne.visibility = View.INVISIBLE
+            dayTwo.visibility = View.INVISIBLE
+            dayThree.visibility = View.INVISIBLE
+            dayFour.visibility = View.INVISIBLE
+            dayFive.visibility = View.INVISIBLE
+        } else if (day == 1){
             dayOne.visibility = View.VISIBLE
             dayTwo.visibility = View.INVISIBLE
             dayThree.visibility = View.INVISIBLE

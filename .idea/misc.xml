@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/temp_splash_screen.xml" value="0.1885" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/activity_waterplant_activity.xml" value="0.335" />
       </map>
