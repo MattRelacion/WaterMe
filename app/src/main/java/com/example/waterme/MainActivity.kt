@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private val filename = "progress.txt"
 
     //hardcoded. can be based on setting
+    private val sipInDay = 3
 
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var date: String
 
     private lateinit var waterDropButton: ImageButton
-    private lateinit var goToNotifyButton: ImageView
+    private lateinit var goToNotifyButton: Button
     private lateinit var weekProgressButton: ImageView
     private lateinit var displayImage: ImageView
 
@@ -46,10 +47,10 @@ class MainActivity : AppCompatActivity() {
                 val updatedDate = curDate
                 lateinit var updatedDayCounter: String
 
-                if (infoToList[1].split(" ")[0].toInt() >= infoToList[2].toInt()) {
-                    updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1) +  "\n" + infoToList[2]
+                if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
+                    updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
                 } else  {
-                    updatedDayCounter = "0 0\n" + infoToList[2]
+                    updatedDayCounter = "0 0"
                 }
 
                 Log.i(TAG, "UPDATE TO FILE: $updatedDate , $updatedDayCounter")
@@ -78,26 +79,26 @@ class MainActivity : AppCompatActivity() {
 
         calendar = Calendar.getInstance()
         date = dateFormat.format(calendar.time)
-        var day = 0
+
         var info = readFromFile(filename)
-        if (info.length != 0) {
-            val separated = info.split("\n")
-            day = separated[1].split(" ")[1].toInt()
-        }
-        Log.i(TAG, "$day")
-        if(day == 0){
+        val separated = info.split("\n")
+        val day = separated[1].split(" ")[1].toInt()
+
+        if(day == 1 || day == 0){
             displayImage.setImageResource(R.drawable.plant1)
-        } else if (day == 1){
-            displayImage.setImageResource(R.drawable.plant2)
         } else if (day == 2){
+            displayImage.setImageResource(R.drawable.plant2)
+        } else if (day == 3){
             displayImage.setImageResource(R.drawable.plant3)
-        }  else {
+        } else if (day == 4) {
+            displayImage.setImageResource(R.drawable.plant3)
+        } else {
             displayImage.setImageResource(R.drawable.plant4)
         }
 
         val initialized = readFromFile(filename)
         if (initialized == "") {
-            val info = "${date}\n0 0\n3"
+            val info = "${date}\n0 0"
             writeToFile(info)
         }
 
@@ -106,15 +107,14 @@ class MainActivity : AppCompatActivity() {
             val separated = info.split("\n")
             val sips = separated[1].split(" ")[0].toInt()
             val day = separated[1].split(" ")[1].toInt()
-            val sipsInADay = separated[2].toInt()
-            val updatedDayCounter = separated[0] + "\n" + (separated[1].split(" ")[0].toInt() + 1) + " " + (separated[1].split(" ")[1].toInt()) + "\n" + separated[2]
+            val updatedDayCounter = separated[0] + "\n" + (sips + 1) + " "+ (day)
             writeToFile(updatedDayCounter)
-            if (sips >= sipsInADay && switch == false){
-                if(day == 0){
+            if (sips >= sipInDay && switch == false){
+                if(day == 1){
                     displayImage.setImageResource(R.drawable.plant2)
-                } else if (day == 1){
+                } else if (day == 2){
                     displayImage.setImageResource(R.drawable.plant3)
-                } else if (day >= 2){
+                } else if (day >= 3){
                     displayImage.setImageResource(R.drawable.plant4)
                 }
                 switch = true
