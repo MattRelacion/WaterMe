@@ -17,13 +17,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.lang.Exception
 
-class WaterPlantActivity: AppCompatActivity(){
+class WaterPlantActivity: AppCompatActivity() {
 
     private val filename = "progress.txt"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
+        setContentView(R.layout.activity_waterplant_activity)
     }
 
     private fun readFromFile(filename: String): String {
