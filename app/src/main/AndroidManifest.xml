@@ -9,7 +9,7 @@
         android:roundIcon="@drawable/button"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-
+        <receiver android:name=".BroadcastReceiver" />
         <activity
             android:name=".Notifications"
             android:exported="false" />
