@@ -59,8 +59,8 @@ class Notifications : AppCompatActivity() {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
 //        set this to logo later
-            .setContentTitle("Example Title")
-            .setContentText("Example Text")
+            .setContentTitle("")
+            .setContentText("Drink some water!")
 //            .setLargeIcon(bitMapLargeIcon)
 //            .setStyle(NotificationCompat.BigPictureStyle().bigLargeIcon(bitmap))
 //            .setContentIntent(pendingIntent)

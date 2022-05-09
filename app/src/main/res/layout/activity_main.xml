@@ -37,10 +37,10 @@
         android:id="@+id/plant"
         android:layout_width="200dp"
         android:layout_height="300dp"
-        android:layout_marginLeft="97dp"
-        android:layout_marginTop="66dp"
-        android:scaleType="fitCenter"
         android:layout_below="@id/waterButton"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="34dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/plant4" />
 
     <LinearLayout

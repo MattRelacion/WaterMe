@@ -32,10 +32,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var waterDropButton: ImageButton
     private lateinit var goToNotifyButton: Button
     private lateinit var weekProgressButton: ImageView
+    private lateinit var displayImage: ImageView
+    private var switch = false
 
     private val receiver = object: DateChangedBroadcastReceiver() {
         override fun dateChanged(onFileDate: String, curDate: String) {
             val info = readFromFile(filename)
+            switch = false
             val infoToList = info.split("\n")
             if (onFileDate.split("/")[0] < curDate.split("/")[0] ||
                 onFileDate.split("/")[1] < curDate.split("/")[1] ||
@@ -71,9 +74,26 @@ class MainActivity : AppCompatActivity() {
         waterDropButton = findViewById(R.id.waterButton)
         goToNotifyButton = findViewById(R.id.goToNotifyButton)
         weekProgressButton = findViewById(R.id.week_progress)
+        displayImage = findViewById(R.id.plant)
 
         calendar = Calendar.getInstance()
         date = dateFormat.format(calendar.time)
+
+        var info = readFromFile(filename)
+        val separated = info.split("\n")
+        val day = separated[1].split(" ")[1].toInt()
+
+        if(day == 1){
+            displayImage.setImageResource(R.drawable.plant1)
+        } else if (day == 2){
+            displayImage.setImageResource(R.drawable.plant2)
+        } else if (day == 3){
+            displayImage.setImageResource(R.drawable.plant3)
+        } else if (day == 4) {
+            displayImage.setImageResource(R.drawable.plant3)
+        } else {
+            displayImage.setImageResource(R.drawable.plant1)
+        }
 
         val initialized = readFromFile(filename)
         if (initialized == "") {
@@ -84,8 +104,21 @@ class MainActivity : AppCompatActivity() {
         waterDropButton.setOnClickListener {
             var info = readFromFile(filename)
             val separated = info.split("\n")
-            val updatedDayCounter = separated[0] + "\n" + (separated[1].split(" ")[0].toInt() + 1) + " "+ (separated[1].split(" ")[1].toInt())
+            val sips = separated[1].split(" ")[0].toInt()
+            val day = separated[1].split(" ")[1].toInt()
+            val updatedDayCounter = separated[0] + "\n" + (sips + 1) + " "+ (day)
             writeToFile(updatedDayCounter)
+            if (sips >= sipInDay && switch == false){
+                if(day.toInt() == 0){
+                    displayImage.setImageResource(R.drawable.plant2)
+                } else if (day.toInt() == 1){
+                    displayImage.setImageResource(R.drawable.plant3)
+                } else {
+                    displayImage.setImageResource(R.drawable.plant4)
+                }
+                switch = true
+                Log.i(TAG, "$day")
+            }
             Log.i(TAG, updatedDayCounter)
         }
 
