@@ -53,6 +53,18 @@ class Notifications : AppCompatActivity() {
             commitSettings()
         }
 
+        mAlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        // Create an Intent to broadcast to the AlarmNotificationReceiver
+        val mNotificationReceiverIntent = Intent(
+            this,
+            BroadcastReceiver::class.java
+        )
+
+        // Create an PendingIntent that holds the NotificationReceiverIntent
+        mNotificationReceiverPendingIntent = PendingIntent.getBroadcast(
+            this, 0, mNotificationReceiverIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     fun onClickSendNotification(v: View) {
