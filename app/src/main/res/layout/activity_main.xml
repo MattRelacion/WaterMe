@@ -1,45 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView android:id="@+id/mainLogo"
-        android:layout_width="154dp"
-        android:layout_height="69dp"
-        android:text="Water Me!"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.243" />
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
 
-    <Button android:id="@+id/waterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Water Drop Here"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
-
-    <Button
+    <ImageView
         android:id="@+id/goToNotifyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go To Notifications"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        android:layout_width="80dp"
+        android:layout_height="61dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/gear_cog" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/waterButton"
+        android:layout_width="match_parent"
+        android:layout_height="179dp"
+        android:layout_below="@id/goToNotifyButton"
+        android:layout_marginTop="70dp"
+        android:background="@null"
+        android:contentDescription="@string/water_me_button"
+        android:scaleType="fitCenter"
+        android:src="@drawable/button"
+        android:text="@string/button" />
+
+    <ImageView
+        android:id="@+id/plant"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/waterButton"
+        android:layout_marginLeft="97dp"
+        android:layout_marginTop="44dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/plant1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="600dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/week_progress"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="0dp"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:text="@string/button" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

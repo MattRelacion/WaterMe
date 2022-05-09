@@ -1,12 +1,14 @@
 package com.example.waterme
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import java.lang.Exception
 import java.sql.DataTruncation
 import java.text.SimpleDateFormat
@@ -19,47 +21,18 @@ class MainActivity : AppCompatActivity() {
     // 0 0        (Note: Sips taken today, days completed
     private val filename = "progress.txt"
 
-    //hardcoded. can be based on setting
-    private val sipInDay = 3
-    
+    //hardcoded. can be based on setting (current amount needed to increase days completed by 1)
+    //put values like sipinday in separate class
+    private var sipInDay = 0
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
 
     private lateinit var calendar: Calendar
     private lateinit var date: String
 
-    private lateinit var waterDropButton: Button
-    private lateinit var goToNotifyButton: Button
+    private lateinit var waterDropButton: ImageButton
+    private lateinit var goToNotifyButton: ImageView
+    private lateinit var weekProgressButton: ImageView
 
-    private val receiver = object: DateChangedBroadcastReceiver() {
-        override fun dateChanged(onFileDate: String, curDate: String) {
-            val info = readFromFile(filename)
-            val infoToList = info.split("\n")
-            if (onFileDate.split("/")[0] < curDate.split("/")[0] ||
-                onFileDate.split("/")[1] < curDate.split("/")[1] ||
-                onFileDate.split("/")[2] < curDate.split("/")[2]) {
-                val updatedDate = curDate
-                lateinit var updatedDayCounter: String
-
-                if (infoToList[1].split(" ")[0].toInt() >= sipInDay) {
-                    updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
-                } else  {
-                    updatedDayCounter = "0 0"
-                }
-
-                Log.i(TAG, "UPDATE TO FILE: $updatedDate , $updatedDayCounter")
-                writeToFile(updatedDate + "\n" + updatedDayCounter)
-            }
-
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val info = readFromFile(filename)
-        val infoToList = info.split("\n")
-        val dateInList = infoToList[0]
-        receiver.registerOnStart(this, dateInList)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,20 +40,37 @@ class MainActivity : AppCompatActivity() {
 
         waterDropButton = findViewById(R.id.waterButton)
         goToNotifyButton = findViewById(R.id.goToNotifyButton)
+        weekProgressButton = findViewById(R.id.week_progress)
+
 
         calendar = Calendar.getInstance()
         date = dateFormat.format(calendar.time)
 
         val initialized = readFromFile(filename)
         if (initialized == "") {
-            val info = "${date}\n0 0"
+            val info = "${date}\n0 0\n3"
             writeToFile(info)
         }
+
+        val info = readFromFile(filename)
+        val infoToList = info.split("\n")
+        if (infoToList[0].split("/")[0] > date.split("/")[0] ||
+                infoToList[0].split("/")[1] > date.split("/")[1]) {
+
+            val updatedDate = date
+            var updatedDayCounter = infoToList[1].split("  ")[1]
+            if (infoToList[1].split(" ")[0].toInt() >= infoToList[2].toInt()) {
+                updatedDayCounter = "0 " + (infoToList[1].split(" ")[1].toInt() + 1)
+            }
+
+            writeToFile(updatedDate + "\n" + updatedDayCounter + "\n" + infoToList[2])
+        }
+
 
         waterDropButton.setOnClickListener {
             var info = readFromFile(filename)
             val separated = info.split("\n")
-            val updatedDayCounter = separated[0] + "\n" + (separated[1].split(" ")[0].toInt() + 1) + " "+ (separated[1].split(" ")[1].toInt())
+            val updatedDayCounter = separated[0] + "\n" + (separated[1].split(" ")[0].toInt() + 1) + " " + (separated[1].split(" ")[1].toInt()) + "\n" + separated[2]
             writeToFile(updatedDayCounter)
             Log.i(TAG, updatedDayCounter)
         }
@@ -88,6 +78,12 @@ class MainActivity : AppCompatActivity() {
         //go to notifications page
         goToNotifyButton.setOnClickListener {
             val intent = Intent(this@MainActivity, Notifications::class.java)
+            startActivity(intent)
+        }
+
+        //go to Water Plant Activity page
+        weekProgressButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, WaterPlantActivity::class.java)
             startActivity(intent)
         }
 
@@ -117,6 +113,14 @@ class MainActivity : AppCompatActivity() {
         openFileOutput(filename, Context.MODE_PRIVATE).use  { output ->
             output.write(text.toByteArray())
         }
+    }
+
+    fun getSipsInDay(): Int {
+        return sipInDay
+    }
+
+    fun setSipsInDay(newSipsInDay: Int) {
+        sipInDay = newSipsInDay
     }
 
     companion object {
