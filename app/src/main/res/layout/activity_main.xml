@@ -13,13 +13,13 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background" />
 
-    <Button
+    <ImageView
         android:id="@+id/goToNotifyButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="@string/go_to_notifications"
-        android:textColor="#000000"
-        tools:ignore="TextContrastCheck" />
+        android:layout_width="80dp"
+        android:layout_height="61dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/gear_cog" />
 
     <ImageButton
         android:id="@+id/waterButton"
@@ -39,7 +39,7 @@
         android:layout_height="300dp"
         android:layout_below="@id/waterButton"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:scaleType="fitCenter"
         android:src="@drawable/plant4" />
 
